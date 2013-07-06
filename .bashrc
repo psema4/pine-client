@@ -1,2 +1,2 @@
 #nodejs dev-server.js # dev
-nodejs dev-server.js & startx #run
+nodejs client-server.js & startx #run
