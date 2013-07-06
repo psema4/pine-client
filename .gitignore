@@ -1,4 +1,5 @@
 *~
+*.swp
 .Xauthority
 .bash_history
 .cache/
