@@ -1,9 +1,12 @@
 *~
 .Xauthority
+.bash_history
 .cache/
 .config/
 .dbus/
+.npm/
 .pki/
+.viminfo
 .xsession-errors
 node_modules
 npm-debug.log
