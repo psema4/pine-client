@@ -1,3 +1,9 @@
 *~
+.Xauthority
+.cache/
+.config/
+.dbus/
+.pki/
+.xsession-errors
 node_modules
 npm-debug.log
