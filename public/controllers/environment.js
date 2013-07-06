@@ -19,8 +19,9 @@ function envController($scope, $location, splash, gamepad, sound) {
 
 /* Sound */
     $scope.testSound = function() {
-        console.log('testSound(): playing...');
-        sound.play('assets/bootsound.wav');
+        var path = 'assets/bootsound.wav';
+        console.log('testSound("' + path + '"): playing...');
+        sound.play(path);
     }
 /* End Sound */
 

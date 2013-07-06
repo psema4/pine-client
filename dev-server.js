@@ -26,10 +26,32 @@ server.get('/testsound', function(req, res) {
 });
 
 server.get('/sound', function(req, res) {
-    var proc = spawn('/usr/bin/aplay', ['/etc/bootsound.wav'])
-    proc.on('exit', function(statusCode) {
-        res.send('ok');
-    });
+    var path = req.query && req.query.snd;
+
+    if (path) {
+        path = './public/' + path;
+
+        //FIXME: sanitize, test for existence
+        var proc = spawn('/usr/bin/aplay', [path]);
+
+//        proc.on('stdout', function(data) {
+//            console.log('/sound: stdout: ' + data);
+//        });
+
+        proc.on('stderr', function(data) {
+            console.log('/sound: stderr: ' + data);
+        });
+
+        proc.on('exit', function(statusCode) {
+            console.log('/sound: ok: ' + path);
+            res.send('ok');
+        });
+
+    } else {
+        var msg = '/sound: no sound specified';
+        console.log(msg);
+        res.send(msg);
+    }
 });
 
 server.use('/public', express.static(__dirname + '/public'));
