@@ -1,0 +1,18 @@
+<div class="view-container">
+    <h3><u>ENVIRONMENT</u></h3>
+    <div class="dashboard">
+        <button ng-click="explore()" class="launcher img-button-pine1 reverse">Explore</button>
+        <button ng-click="launch('test')" class="launcher img-button-pine2 reverse">Test 1</button>
+        <button ng-click="launch('test2')" class="launcher transparent-bg img-button-pine2 reverse">Test 2</button>
+    </div>
+
+    <div class="testing">
+        <h3>Test Area</h3>
+
+        <h5>Gamepads</h5>
+        <textarea ng-model="gamepadDump" style="width: 98%; min-height: 80px;"></textarea><br/>
+
+        <h5>Audio</h5>
+        <button ng-click="testSound()">Test Sound</button>
+    </div>
+</div>
