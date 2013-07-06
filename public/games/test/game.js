@@ -12,5 +12,7 @@ window.Game = {
 
         ctx.fillStyle = 'rgb(200,0,0)';
         ctx.fillRect(10,10,620,460);
+
+        Game.scope.sound.play('/assets/bootsound.wav');
     }
 }
