@@ -2,6 +2,7 @@ var fs = require('fs');
 var express = require('express');
 var server = express();
 var exec = require('child_process').exec;
+var spawn = require('child_process').spawn;
 var util = require('util');
 
 function puts(error, stdout, stderr) {
@@ -22,6 +23,13 @@ server.get('/testsound', function(req, res) {
             res.send('ok');
         }
     );
+});
+
+server.get('/sound', function(req, res) {
+    var proc = spawn('/usr/bin/aplay', ['/etc/bootsound.wav'])
+    proc.on('exit', function(statusCode) {
+        res.send('ok');
+    });
 });
 
 server.use('/public', express.static(__dirname + '/public'));
