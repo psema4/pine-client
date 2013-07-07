@@ -15,6 +15,11 @@ server.get('/', function (req, res) {
   res.send(html);
 });
 
+server.get('/system/info', function(req, res) {
+    var isPine = process.env.PINESYSTEM || '0'; 
+    res.send('{"ispine":"' + isPine + '"}');
+});
+
 server.get('/testsound', function(req, res) {
     exec('/usr/bin/aplay /etc/bootsound.wav'
       , { cwd: process.env.pwd, env: process.env }
@@ -117,7 +122,7 @@ server.get('/sound', function(req, res) {
 
 server.use('/public', express.static(__dirname + '/public'));
 
-server.listen(5000);
-
-console.log('Pine dev server is now listening on port 5000.');
-console.log('Press ctrl+c to kill the server.');
+server.listen(5000, 'localhost', function() {
+    console.log('Pine dev server is now listening on port 5000.');
+    console.log('Press ctrl+c to kill the server.');
+});

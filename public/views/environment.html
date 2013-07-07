@@ -25,8 +25,8 @@
                 <button ng-click="testSound()">Test Sound</button>
             </div>
 
-            <div style="display: inline-block; position: absolute; top: 0px; left: 500px; width: 200px; overflow: hidden;">
-                <h5>Other</h5>
+            <div ng-show="isPineSystem" style="display: inline-block; position: absolute; top: 0px; left: 500px; width: 200px; overflow: hidden;">
+                <h5>System</h5>
                 <button ng-click="halt()">Halt</button> &nbsp;
                 <button ng-click="reboot()">Reboot</button> &nbsp;
                 <button ng-click="updateClient()">Update Client</button>

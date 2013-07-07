@@ -1,9 +1,14 @@
 var testApp = angular.module('testapp', []);
 
-function envController($scope, $location, splash, gamepad, sound, shutdown, update) {
+function envController($scope, $location, splash, gamepad, sound, shutdown, update, sysinfo) {
     $scope.news = "Sample News Item.";
-
     $scope.splash = splash;
+
+    $scope.isPineSystem = false;
+
+    var info = sysinfo.get(function(info) {
+        $scope.isPineSystem = info.ispine || false;
+    });
 
 /* Gamepads */
     $scope.gamepad = gamepad;
@@ -51,4 +56,4 @@ function envController($scope, $location, splash, gamepad, sound, shutdown, upda
 }
 
 testApp.controller('envController', envController);
-envController.$inject = ['$scope', '$location', 'Splash', 'Gamepad', 'Sound', 'Shutdown', 'Update'];
+envController.$inject = ['$scope', '$location', 'Splash', 'Gamepad', 'Sound', 'Shutdown', 'Update', 'Sysinfo'];
