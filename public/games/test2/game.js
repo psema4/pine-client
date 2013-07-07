@@ -6,7 +6,7 @@ window.Game = {
   , run: function() {
         console.log('test game #2 running');
 
-        var ctx = Game.scope.setup();
+        var ctx = Game.$scope.setup();
         Game.ctx = ctx;
 
         ctx.fillStyle = 'rgb(255,255,255)';

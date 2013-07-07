@@ -56,7 +56,7 @@ testApp.config(function($routeProvider) {
             scriptContainer.onload = function() {
                 if (Game && 'run' in Game && typeof Game.run == 'function') {
                     var startGame = function() {
-                        Game.scope = current.locals.$scope; 
+                        Game.$scope = current.locals.$scope; 
                         Game.run();
                     };
 
