@@ -2,9 +2,10 @@ var services = angular.module('testapp.services');
 
 services.factory('Shutdown', ['$http', function($http) {
     return {
-        halt: function(path) {
-            // timeout after a short period so we don't block (play multiple sounds simultaneously)
-            $http({ method: 'GET', url: '/halt' }).
+        halt: function(reboot) {
+            var path = reboot ? '/reboot' : '/halt';
+
+            $http({ method: 'GET', url: path }).
                 success(function(data, status, headers, config) {
                    console.log('halt: success:', status, data);
                 }).

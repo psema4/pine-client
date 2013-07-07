@@ -26,15 +26,21 @@ server.get('/testsound', function(req, res) {
 });
 
 server.get('/halt', function(req, res) {
-    var msg = '/halt: stub - trying halt.sh';
-    console.log(msg);
-    res.send(msg);
-
-    exec('/sbin/shutdown -a -h 0'
+    exec('sudo /sbin/shutdown -a -h 0'
       , { cwd: process.env.pwd, env: process.env }
       , function(error, stdout, stderr) {
             puts(error, stdout, stderr);
-            res.send('ok');
+            res.send('halt');
+        }
+    );
+});
+
+server.get('/reboot', function(req, res) {
+    exec('sudo /sbin/shutdown -a -r 0'
+      , { cwd: process.env.pwd, env: process.env }
+      , function(error, stdout, stderr) {
+            puts(error, stdout, stderr);
+            res.send('reboot');
         }
     );
 });

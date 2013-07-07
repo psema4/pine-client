@@ -29,6 +29,10 @@ function envController($scope, $location, splash, gamepad, sound, shutdown, upda
         shutdown.halt();
     }
 
+    $scope.reboot = function() {
+        shutdown.halt(true);
+    }
+
     $scope.updateClient = function() {
         update.client();
     }
