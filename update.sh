@@ -11,8 +11,7 @@ if [ "${PINESHA}" != "${ORIGINSHA}" ]; then
     /usr/bin/git pull
 
     if [ $? == 0 ]; then
-        #sudo /sbin/shutdown -a -r 0
-        echo "fake reboot"
+        sudo /sbin/shutdown -a -r 0
     else
         echo "uh-oh."
     fi
