@@ -25,6 +25,26 @@ server.get('/testsound', function(req, res) {
     );
 });
 
+server.get('/halt', function(req, res) {
+    var msg = '/halt: stub - trying halt.sh';
+    console.log(msg);
+    res.send(msg);
+
+    exec('./halt.sh'
+      , { cwd: process.env.pwd, env: process.env }
+      , function(error, stdout, stderr) {
+            puts(error, stdout, stderr);
+            res.send('ok');
+        }
+    );
+});
+
+server.get('/update', function(req, res) {
+    var msg = '/update: stub';
+    console.log(msg);
+    res.send(msg);
+});
+
 server.get('/sound', function(req, res) {
     var path = req.query && req.query.snd;
 

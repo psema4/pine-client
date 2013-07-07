@@ -1,6 +1,6 @@
 var testApp = angular.module('testapp', []);
 
-function envController($scope, $location, splash, gamepad, sound) {
+function envController($scope, $location, splash, gamepad, sound, shutdown, update) {
     $scope.viewName = "env";
 
     $scope.splash = splash;
@@ -25,9 +25,17 @@ function envController($scope, $location, splash, gamepad, sound) {
     }
 /* End Sound */
 
+    $scope.halt = function() {
+        shutdown.halt();
+    }
+
+    $scope.updateClient = function() {
+        update.client();
+    }
+
     $scope.launch = function(id) {
         $location.path('/Game/'+id);
-    };
+    }
 
     $scope.explore = function() {
         $location.path('/Explore');
@@ -39,4 +47,4 @@ function envController($scope, $location, splash, gamepad, sound) {
 }
 
 testApp.controller('envController', envController);
-envController.$inject = ['$scope', '$location', 'Splash', 'Gamepad', 'Sound'];
+envController.$inject = ['$scope', '$location', 'Splash', 'Gamepad', 'Sound', 'Shutdown', 'Update'];
