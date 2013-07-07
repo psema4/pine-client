@@ -5,6 +5,7 @@
 .cache/
 .config/
 .dbus/
+.gitconfig
 .npm/
 .pki/
 .vim/
