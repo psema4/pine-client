@@ -1,7 +1,6 @@
 var testApp = angular.module('testapp', []);
 
 function gameController($scope, $location, splash, $routeParams, Sound) {
-    $scope.viewName = "game";
     $scope.gameid = $routeParams.id;
     $scope.splash = splash;
     $scope.sound = Sound;
