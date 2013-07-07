@@ -46,9 +46,15 @@ server.get('/reboot', function(req, res) {
 });
 
 server.get('/update', function(req, res) {
-    var msg = '/update: stub';
+    var msg = '/update: stub - trying update.sh';
     console.log(msg);
-    res.send(msg);
+    exec('./update.sh'
+      , { cwd: process.env.pwd, env: process.env }
+      , function(error, stdout, stderr) {
+            puts(error, stdout, stderr);
+            res.send('update & reboot');
+        }
+    );
 });
 
 server.get('/sound', function(req, res) {
