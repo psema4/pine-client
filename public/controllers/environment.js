@@ -1,7 +1,7 @@
 var testApp = angular.module('testapp', []);
 
 function envController($scope, $location, splash, gamepad, sound, shutdown, update) {
-    $scope.viewName = "env";
+    $scope.news = "Sample News Item.";
 
     $scope.splash = splash;
 

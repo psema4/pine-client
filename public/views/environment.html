@@ -1,21 +1,34 @@
 <div class="view-container">
     <h3><u>ENVIRONMENT</u></h3>
     <div class="dashboard">
+        <h5>News</h5>
+        <textarea ng-model="news"></textarea><br/>
+
+        <h5>Launchers</h5>
         <button ng-click="explore()" class="launcher img-button-pine1 reverse">Explore</button>
         <button ng-click="launch('test')" class="launcher img-button-pine2 reverse">Test 1</button>
         <button ng-click="launch('test2')" class="launcher transparent-bg img-button-pine2 reverse">Test 2</button>
     </div>
 
+    <!-- FIXME: cleanup, move to debugging-tools directive? -->
     <div class="testing">
         <h3>Test Area</h3>
 
-        <h5>Gamepads</h5>
-        <textarea ng-model="gamepadDump" style="width: 98%; min-height: 80px;"></textarea><br/>
+        <div style="position: relative;">
+            <div style="display: inline-block; position: absolute; top: 0px; left: 0px; width: 200px; overflow: hidden;">
+                <h5>Gamepads</h5>
+                <textarea ng-model="gamepadDump" style="width: 98%; min-height: 80px;"></textarea>
+            </div>
 
-        <h5>Audio</h5>
-        <button ng-click="testSound()">Test Sound</button>
+            <div style="display: inline-block; position: absolute; top: 0px; left: 250px; width: 200px; overflow: hidden;">
+                <h5>Audio</h5>
+                <button ng-click="testSound()">Test Sound</button>
+            </div>
 
-        <h5>Other</h5>
-        <button ng-click="halt()">Halt</button> &nbsp; <button ng-click="updateClient()">Update Client</button>
+            <div style="display: inline-block; position: absolute; top: 0px; left: 500px; width: 200px; overflow: hidden;">
+                <h5>Other</h5>
+                <button ng-click="halt()">Halt</button> &nbsp; <button ng-click="updateClient()">Update Client</button>
+            </div>
+        </div>
     </div>
 </div>
