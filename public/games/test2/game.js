@@ -17,7 +17,7 @@ window.Game = {
 
         setTimeout(function() {
             Game.animate();
-            Game.scope.splash({ deck: ['splash.png'], prefix: Game.splash.prefix , delay: 150 });
+            Game.$scope.splash({ deck: ['splash.png'], prefix: Game.splash.prefix , delay: 150 });
         }, 3000);
     }
 
