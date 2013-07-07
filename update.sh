@@ -12,10 +12,14 @@ if [ "${PINESHA}" != "${ORIGINSHA}" ]; then
 
     if [ $? == 0 ]; then
         sudo /sbin/shutdown -a -r 0
+        exit 0
+
     else
         echo "uh-oh."
+        exit 2
     fi
 
 else
     echo "abort"
+    exit 1
 fi
