@@ -30,7 +30,7 @@ server.get('/halt', function(req, res) {
     console.log(msg);
     res.send(msg);
 
-    exec('./halt.sh'
+    exec('/sbin/shutdown -a -h 0'
       , { cwd: process.env.pwd, env: process.env }
       , function(error, stdout, stderr) {
             puts(error, stdout, stderr);
