@@ -2,7 +2,7 @@ var testApp = angular.module('testapp', []);
 
 function storeController($scope, $location) {
     $scope.quit = function() {
-        $location.path('/Environment');
+        $location.path('/');
     }
 
     $scope.more = function(id) {

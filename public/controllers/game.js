@@ -14,7 +14,7 @@ function gameController($scope, $location, splash, $routeParams, Sound) {
     }
 
     $scope.quit = function() {
-        $location.path('/Environment');
+        $location.path('/');
     }
 }
 

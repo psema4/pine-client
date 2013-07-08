@@ -2,7 +2,7 @@ var testApp = angular.module('testapp', ['testapp.services']);
 
 testApp.config(function($routeProvider) {
     $routeProvider
-    .when('/Environment', {
+    .when('/', {
         controller: 'envController',
         templateUrl: 'views/environment.html'
     })
@@ -18,7 +18,7 @@ testApp.config(function($routeProvider) {
         controller: 'storeController',
         templateUrl: 'views/store.html'
     })
-    .otherwise({redirectTo: '/Environment'});
+    .otherwise({redirectTo: '/'});
 
 }).run(function($rootScope, $location, $templateCache, $window, Splash) {
     $rootScope.$on("$routeChangeStart", function(evt, next, current) {
