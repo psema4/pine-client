@@ -2,7 +2,7 @@
   "name": "pine-client",
   "version": "0.0.0",
   "description": "Pine Console Client Application",
-  "main": "dev-server.js",
+  "main": "client-server.js",
   "dependencies": {
     "express": "~3.0.6",
     "json-parse": "*",
