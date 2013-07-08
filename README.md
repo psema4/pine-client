@@ -9,3 +9,10 @@ This is what most would consider the front-end to "Pine".  It's an AngularJS + E
 *pine-client* communicates with a central *pine-server* (online store, community hub) using RESTful API's.
 
 **FIXME:** Fill in, add standalone launcher info
+
+## See also
+
+* https://github.com/psema4/pine-distro
+* https://github.com/psema4/pine-server
+* https://github.com/psema4/pine
+
