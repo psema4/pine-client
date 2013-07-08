@@ -45,7 +45,7 @@ function envController($scope, $location, splash, gamepad, sound, shutdown, upda
     }
 
     $scope.launch = function(id) {
-        $location.path('/Game/'+id);
+        $location.path('/game/'+id);
     }
 
     $scope.explore = function() {
