@@ -5,6 +5,14 @@ var exec = require('child_process').exec;
 var spawn = require('child_process').spawn;
 var util = require('util');
 
+// configurables
+//   IMPORTANT: On a Raspberry Pi (pine-distro) or propery configured Ubuntu/Debian machine, be sure to set
+//              isPublic to false; otherwise  proxy-services such as halt, reboot & update may be exposed to
+//              the world at large.
+//
+var isPublic = false;    // if false, will reject ALL requests unless they originate from localhost
+var serverPort = 5000;  // pine default port is 5000
+
 function puts(error, stdout, stderr) {
     util.puts(stdout);
     util.puts(stderr);
@@ -122,7 +130,14 @@ server.get('/sound', function(req, res) {
 
 server.use('/public', express.static(__dirname + '/public'));
 
-server.listen(5000, 'localhost', function() {
-    console.log('Pine dev server is now listening on port 5000.');
+function writeLogHead() {
+    var mode = isPublic ? 'public' : 'private';
+    console.log('Pine client-server is ' + mode + ' and now listening on port ' + serverPort + '.');
     console.log('Press ctrl+c to kill the server.');
-});
+}
+
+if (isPublic) {
+    server.listen(serverPort, writeLogHead);
+} else {
+    server.listen(serverPort, 'localhost', writeLogHead);
+}
