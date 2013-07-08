@@ -6,9 +6,13 @@ testApp.config(function($routeProvider) {
         controller: 'envController',
         templateUrl: 'views/environment.html'
     })
-    .when('/Game/:id', {
+    .when('/game/:id', {
         controller: 'gameController',
         templateUrl: 'views/game.html'
+    })
+    .when('/game/info/:id', {
+        controller: 'gameInfoController',
+        templateUrl: 'views/gameinfo.html'
     })
     .when('/Explore', {
         controller: 'storeController',
