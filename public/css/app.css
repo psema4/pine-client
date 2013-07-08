@@ -19,6 +19,8 @@ div.dashboard {
     color: #fff;
     border: 0px solid #000;
     margin: 0.25em;
+    width: 99%;
+    height: 40px;
 }
 
 button.launcher,
