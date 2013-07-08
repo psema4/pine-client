@@ -28,16 +28,6 @@ server.get('/system/info', function(req, res) {
     res.send('{"ispine":"' + isPine + '"}');
 });
 
-server.get('/testsound', function(req, res) {
-    exec('/usr/bin/aplay /etc/bootsound.wav'
-      , { cwd: process.env.pwd, env: process.env }
-      , function(error, stdout, stderr) {
-            puts(error, stdout, stderr);
-            res.send('ok');
-        }
-    );
-});
-
 server.get('/halt', function(req, res) {
     exec('sudo /sbin/shutdown -a -h 0'
       , { cwd: process.env.pwd, env: process.env }
@@ -59,25 +49,17 @@ server.get('/reboot', function(req, res) {
 });
 
 server.get('/update', function(req, res) {
-    var msg = '/update: stub - trying update.sh';
+    var msg = '/update: running';
     console.log(msg);
-/*
-    exec('./update.sh'
-      , { cwd: process.env.pwd, env: process.env }
-      , function(error, stdout, stderr) {
-            puts(error, stdout, stderr);
-            res.send('update & reboot');
-        }
-    );
-*/
+
     var proc = spawn('./update.sh', []);
 
     proc.on('stdout', function(data) {
-        console.log('/sound: stdout: ' + data);
+        console.log('/update: stdout: ' + data);
     });
 
     proc.on('stderr', function(data) {
-        console.log('/sound: stderr: ' + data);
+        console.log('/update: stderr: ' + data);
     });
 
     proc.on('exit', function(statusCode) {
@@ -107,10 +89,6 @@ server.get('/sound', function(req, res) {
 
         //FIXME: sanitize, test for existence
         var proc = spawn('/usr/bin/aplay', [path]);
-
-//        proc.on('stdout', function(data) {
-//            console.log('/sound: stdout: ' + data);
-//        });
 
         proc.on('stderr', function(data) {
             console.log('/sound: stderr: ' + data);
