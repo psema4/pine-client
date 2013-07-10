@@ -106,6 +106,48 @@ server.get('/sound', function(req, res) {
     }
 });
 
+//FIXME: Fetch data from serverside rather than using a temporary object
+var achievement_data = {}
+function getAchievementProgress (game, slug, cb) {
+    if (!achievement_data[game]) achievement_data[game] = {};
+    cb(achievement_data[game][slug] || 0)
+}
+
+function setAchievementProgress (game, slug, value, cb) {
+    if (!achievement_data[game]) achievement_data[game] = {};
+    achievement_data[game][slug] = value
+    cb(null)
+}
+
+server.get('/achievements/progress', function (req, res) {
+    getAchievementProgress(req.query.game, req.query.slug, function (progress) {
+        res.send(progress)
+    })
+})
+
+server.get('/achievements/unlocked', function (req, res) {
+    fs.readFile('public/games/' + req.query.game + '/game.json', 'utf8', function (err, game) {
+        var achievement = JSON.parse(game).achievements[req.query.slug];
+        
+        getAchievementProgress(req.query.game, req.query.slug, function (progress) {
+            res.send(
+                !achievement.goal && !!progress
+             || achievement.goal === progress
+            );
+        });
+    })
+})
+
+server.get('/achievements/unlock', function (req, res) {
+    fs.readFile('public/games/' + req.query.game + '/game.json', 'utf8', function (err, game) {
+        var achievement = JSON.parse(game).achievements[req.query.slug];
+        
+        setAchievementProgress(req.query.game, req.query.slug, achievement.goal || 1, function (err) {
+            res.send(err)
+        });
+    })
+})
+
 server.use('/public', express.static(__dirname + '/public'));
 
 function writeLogHead() {

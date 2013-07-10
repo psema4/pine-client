@@ -1,9 +1,10 @@
 var testApp = angular.module('testapp', []);
 
-function gameController($scope, $location, splash, $routeParams, Sound) {
+function gameController($scope, $location, splash, $routeParams, Sound, Achievements) {
     $scope.gameid = $routeParams.id;
     $scope.splash = splash;
     $scope.sound = Sound;
+    $scope.achievements = Achievements
 
     $scope.setup = function() {
         var canvas = document.querySelector('canvas');
@@ -19,4 +20,4 @@ function gameController($scope, $location, splash, $routeParams, Sound) {
 }
 
 testApp.controller('gameController', gameController);
-gameController.$inject = ['$scope', '$location', 'Splash', '$routeParams', 'Sound'];
+gameController.$inject = ['$scope', '$location', 'Splash', '$routeParams', 'Sound', 'Achievements'];

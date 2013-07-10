@@ -2,6 +2,13 @@
     "id": "test",
     "title": "Test 1",
     "author": "Scott Elcomb",
-    "description": "A red box with a border."
+    "description": "A red box with a border.",
+    "achievements": {
+    	"click_happy": {
+    		"title": "Click-happy",
+    		"description": "You clicked the rectangle!",
+    		"icon": ""
+    	}
+    }
 }
 

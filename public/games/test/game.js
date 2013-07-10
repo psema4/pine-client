@@ -14,5 +14,9 @@ window.Game = {
         ctx.fillRect(10,10,620,460);
 
         Game.$scope.sound.play('/assets/bootsound.wav');
+
+        ctx.canvas.onclick = function () {
+            Game.$scope.achievements.unlock('click_happy')
+        }
     }
 }
