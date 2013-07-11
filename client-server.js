@@ -31,7 +31,7 @@ server.get('/system/info', function(req, res) {
 
         [].forEach.call(folders, function(folder) {
             var filename = 'public/games/' + folder + '/game.json';
-            games.push(JSON.parse(fs.readFileSync(filename, 'utf-8')));
+            games.push(JSON.parse(fs.readFileSync(filename, 'utf8')));
         });
 
         var info = {
