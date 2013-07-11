@@ -3,9 +3,5 @@
     <button class="quit" ng-click="quit()">Quit</button>
 
     <h5>Games</h5>
-    <launcher ng-repeat="l in launchers" lid="{{ l.id }}" title="{{ l.title }}" icon="games/{{ l.id }}/assets/icon.png" on-click="more2()"></launcher>
-<!--
-    <button ng-click="more('test')" class="launcher img-button-pine2 reverse">Test 1</button>
-    <button ng-click="more('test2')" class="launcher transparent-bg img-button-pine2 reverse">Test 2</button>
--->
+    <launcher ng-repeat="l in launchers" lid="{{ l.id }}" title="{{ l.title }}" icon="games/{{ l.id }}/assets/icon.png" on-click="more()"></launcher>
 </div>

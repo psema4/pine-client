@@ -7,6 +7,8 @@ function gameInfoController($scope, $location, gameinfo, gamepad) {
 
     var id = /\/(\w+)$/.exec($location.$$path)[1];
 
+console.log('looking up game id:', id);
+
     $scope.gameInfo = gameinfo.get(id, function(manifest) {
         $scope.title = manifest.title;
         $scope.description = manifest.description;
@@ -23,8 +25,8 @@ function gameInfoController($scope, $location, gameinfo, gamepad) {
             var gp0 = gpStates[0];
 
             if (gp0) {
-                // start (quit)
-                if (gp0.buttons[9] == 1) {
+                // button 2 (quit)
+                if (gp0.buttons[1] == 1) {
                     setTimeout(function() { $scope.quit(); }, 100);
                 }
             }
