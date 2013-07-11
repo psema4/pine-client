@@ -27,7 +27,9 @@ function envController($scope, $location, splash, gamepad, sound, shutdown, upda
                 icon: game.icon
             });
         });
-        $scope.launchers = newLaunchers;
+        $scope.launchers = newLaunchers.sort(function(a, b) {
+            return a.title < b.title ? -1 : a.title > b.title ? 1 : 0;
+        });
     }
 
     $scope.gamepad = gamepad;
