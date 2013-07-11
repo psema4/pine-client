@@ -55,6 +55,10 @@ button.quit {
     padding-top: 0px;
 }
 
+.focus {
+    border-color: #44c !important;
+}
+
 button.img-button-pine1,
 button.img-button-pine2 {
     background-image: url(../assets/splash/pine.png);
