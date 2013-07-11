@@ -5,7 +5,7 @@
         <textarea ng-model="news"></textarea><br/>
 
         <h5>Launchers</h5>
-        <launcher ng-repeat="l in launchers" lid="{{ l.id }}" title="{{ l.title }}" icon="games/{{ l.id }}/assets/icon.png" on-click="launch2()"></launcher>
+        <launcher ng-repeat="l in launchers" lid="{{ l.id }}" title="{{ l.title }}" icon="games/{{ l.id }}/assets/icon.png" on-click="launch()"></launcher>
     </div>
 
     <!-- FIXME: cleanup, move to debugging-tools directive? -->

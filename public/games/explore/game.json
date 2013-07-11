@@ -1,15 +1,8 @@
 {
-    "id": "test",
+    "id": "explore",
     "icon": "assets/icon.png",
-    "title": "Test 1",
+    "title": "Explore",
     "author": "Scott Elcomb",
-    "description": "A red box with a border.",
-    "achievements": {
-    	"click_happy": {
-    		"title": "Click-happy",
-    		"description": "You clicked the rectangle!",
-    		"icon": ""
-    	}
-    }
+    "description": "Find new games"
 }
 
