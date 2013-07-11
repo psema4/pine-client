@@ -1,25 +1,35 @@
 var testApp = angular.module('testapp', []);
 
 function envController($scope, $location, splash, gamepad, sound, shutdown, update, sysinfo, news) {
-
-$scope.launchers = [
-    { id: 'explore', title: 'Explore', icon: "assets/icon.png" },
-    { id: 'test', title: 'Test 1', icon: "assets/icon.png" },
-    { id: 'test2', title: 'Test 2', icon: "assets/icon.png" }
-];
+    $scope.games = [];
+    $scope.launchers = [];
 
     $scope.news = news.get(function(latest) {
         $scope.news = latest;
     });
+
     $scope.splash = splash;
 
     $scope.isPineSystem = false;
 
     var info = sysinfo.get(function(info) {
         $scope.isPineSystem = info.ispine || false;
+        $scope.games = JSON.parse(info.games) || [];
+        updateLaunchers();
     });
 
-/* Gamepads */
+    function updateLaunchers() {
+        var newLaunchers = [];
+        [].forEach.call($scope.games, function(game) {
+            newLaunchers.push({
+                id: game.id,
+                title: game.title,
+                icon: game.icon
+            });
+        });
+        $scope.launchers = newLaunchers;
+    }
+
     $scope.gamepad = gamepad;
     $scope.gamepadDump = gamepad.poll();
 
@@ -29,15 +39,11 @@ $scope.launchers = [
         });
     }, 250);
 
-/* End Gamepads */
-
-/* Sound */
     $scope.testSound = function() {
         var path = 'assets/bootsound.wav';
         console.log('testSound("' + path + '"): playing...');
         sound.play(path);
     }
-/* End Sound */
 
     $scope.halt = function() {
         shutdown.halt();
