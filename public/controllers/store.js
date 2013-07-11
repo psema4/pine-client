@@ -1,6 +1,6 @@
 var testApp = angular.module('testapp');
 
-function storeController($scope, $location, gamepad, sysinfo) {
+function storeController($scope, $location, gamepad, storeinfo) {
     $scope.gamepad = gamepad;
 
 $scope.bumController = false;
@@ -33,11 +33,8 @@ $scope.bumController = false;
         }
     });
 
-    /* Init */
-    var info = sysinfo.get(function(info) {
-        $scope.isPineSystem = info.ispine || false;
-        $scope.games = info.games || [];
-        $scope.store = info.store || [];
+    var store = storeinfo.get(function(info) {
+        $scope.store = info || [];
         updateLaunchers();
     });
 
@@ -118,13 +115,11 @@ $scope.bumController = false;
 // see FIXME above
 if ($scope.bumController) {
     if (gp0.buttons[2] == 1) {
-console.log('button 1a');
         var launcherEl = document.querySelectorAll('.launcher')[$scope.focus];
         $scope.launchTarget = launcherEl;
     }
 } else {
                 if (gp0.buttons[0] == 1) {
-console.log('button 1b');
                     var launcherEl = document.querySelectorAll('.launcher')[$scope.focus];
                     $scope.launchTarget = launcherEl;
                 }
@@ -140,5 +135,5 @@ console.log('button 1b');
 }
 
 testApp.controller('storeController', storeController);
-storeController.$inject = ['$scope', '$location', 'Gamepad', 'Sysinfo'];
+storeController.$inject = ['$scope', '$location', 'Gamepad', 'Storeinfo'];
 

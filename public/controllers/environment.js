@@ -39,7 +39,7 @@ $scope.bumController = false;
     });
 
     /* Init */
-    var info = sysinfo.get(function(info) {
+    sysinfo.get(function(info) {
         $scope.isPineSystem = info.ispine || false;
         $scope.games = info.games || [];
         updateLaunchers();
