@@ -8,7 +8,7 @@ function gameController($scope, $location, splash, $routeParams, Sound, Achievem
     $scope.gamepad = gamepad;
 
 //FIXME: Generalize, give user ability to configure gamepad mappings
-$scope.bumController = true;
+$scope.bumController = false;
 
     $scope.setup = function() {
         var canvas = document.querySelector('canvas');

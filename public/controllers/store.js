@@ -3,7 +3,7 @@ var testApp = angular.module('testapp');
 function storeController($scope, $location, gamepad, sysinfo) {
     $scope.gamepad = gamepad;
 
-$scope.bumController = true;
+$scope.bumController = false;
 
     $scope.focus = 0;
     $scope.launchTarget = false;

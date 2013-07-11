@@ -11,7 +11,7 @@ function envController($scope, $location, splash, gamepad, sound, shutdown, upda
     $scope.launchTarget = false;
 
 //FIXME: Generalize, give user ability to configure gamepad mappings
-$scope.bumController = true;
+$scope.bumController = false;
 
     /* Watches */
     $scope.$watch('launchTarget', function(newValue, oldValue) {
