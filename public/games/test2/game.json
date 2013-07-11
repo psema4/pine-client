@@ -1,5 +1,6 @@
 {
     "id": "test2",
+    "icon": "assets/icon.png",
     "title": "Test 2",
     "author": "Scott Elcomb",
     "description": "A blue box with a border."

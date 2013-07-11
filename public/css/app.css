@@ -26,7 +26,6 @@ div.dashboard {
 button.launcher,
 button.quit {
     display: 'inline-block';
-    margin: 1em;
     border-radius: 6px;
     font-weight: bold;
     text-align: center;
@@ -35,10 +34,14 @@ button.quit {
 }
 
 button.launcher {
+    margin: 0.25em;
     width: 80px;
     height: 80px;
     font-size: 16px;
     padding-top: 52px;
+    background-repeat: no-repeat;
+    background-position: 10% 10%;
+    background-size: 100% auto;
 }
 
 button.quit {
@@ -48,6 +51,7 @@ button.quit {
     width: 40px;
     height: 40px;
     font-size: 10px;
+    margin: 1em;
     padding-top: 0px;
 }
 

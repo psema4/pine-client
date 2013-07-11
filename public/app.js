@@ -1,4 +1,4 @@
-var testApp = angular.module('testapp', ['testapp.services']);
+var testApp = angular.module('testapp', ['testapp.directives', 'testapp.services']);
 
 testApp.config(function($routeProvider) {
     $routeProvider

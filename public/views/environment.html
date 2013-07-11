@@ -5,9 +5,7 @@
         <textarea ng-model="news"></textarea><br/>
 
         <h5>Launchers</h5>
-        <button ng-click="explore()" class="launcher img-button-pine1 reverse">Explore</button>
-        <button ng-click="launch('test')" class="launcher transparent-bg img-button-pine2 reverse">Test 1</button>
-        <button ng-click="launch('test2')" class="launcher transparent-bg img-button-pine2 reverse">Test 2</button>
+        <launcher ng-repeat="l in launchers" lid="{{ l.id }}" title="{{ l.title }}" icon="games/{{ l.id }}/assets/icon.png" on-click="launch2()"></launcher>
     </div>
 
     <!-- FIXME: cleanup, move to debugging-tools directive? -->

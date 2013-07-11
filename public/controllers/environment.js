@@ -1,6 +1,13 @@
 var testApp = angular.module('testapp', []);
 
 function envController($scope, $location, splash, gamepad, sound, shutdown, update, sysinfo, news) {
+
+$scope.launchers = [
+    { id: 'explore', title: 'Explore', icon: "assets/icon.png" },
+    { id: 'test', title: 'Test 1', icon: "assets/icon.png" },
+    { id: 'test2', title: 'Test 2', icon: "assets/icon.png" }
+];
+
     $scope.news = news.get(function(latest) {
         $scope.news = latest;
     });
@@ -44,8 +51,20 @@ function envController($scope, $location, splash, gamepad, sound, shutdown, upda
         update.client();
     }
 
-    $scope.launch = function(id) {
-        $location.path('/game/'+id);
+    $scope.launch = function() {
+        var id = this.l.id; // extract game id from the launcher directive
+
+        if (id) {
+            if (id == 'explore') {              // have to catch non-games as special cases
+                $scope.explore();
+
+            } else {
+                $location.path('/game/'+id);    // otherwise send our ng-view to the gameController
+            }
+
+        } else {
+            throw new Error('launch: no launcher id');
+        }
     }
 
     $scope.explore = function() {
