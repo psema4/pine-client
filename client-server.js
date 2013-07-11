@@ -4,6 +4,7 @@ var server = express();
 var exec = require('child_process').exec;
 var spawn = require('child_process').spawn;
 var util = require('util');
+var http = require('http');
 
 // configurables
 //   IMPORTANT: On a Raspberry Pi (pine-distro) or propery configured Ubuntu/Debian machine, be sure to set
@@ -36,10 +37,27 @@ server.get('/system/info', function(req, res) {
 
         var info = {
             ispine: isPine,
-            games: JSON.stringify(games)
+//            games: JSON.stringify(games)
+            games: games
         }
 
-        res.send(JSON.stringify(info));
+        // get list of games from the pine store (pinegames.org)
+        http.get("http://pinegames.org/system/info", function(r) {
+            var remoteData = '';
+
+            r.on('data', function(d) {
+                remoteData += d;
+            });
+
+            r.on('end', function() {
+                info.store = JSON.parse(remoteData);
+                res.send(JSON.stringify(info));
+            });
+
+        }).on('error', function(e) {
+            console.log("Got error: " + e.message);
+            res.send(JSON.stringify(info));
+        });
     });
 });
 

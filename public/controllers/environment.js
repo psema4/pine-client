@@ -41,7 +41,7 @@ $scope.bumController = false;
     /* Init */
     var info = sysinfo.get(function(info) {
         $scope.isPineSystem = info.ispine || false;
-        $scope.games = JSON.parse(info.games) || [];
+        $scope.games = info.games || [];
         updateLaunchers();
     });
 

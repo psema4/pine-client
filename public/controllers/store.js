@@ -36,14 +36,15 @@ $scope.bumController = false;
     /* Init */
     var info = sysinfo.get(function(info) {
         $scope.isPineSystem = info.ispine || false;
-        $scope.games = JSON.parse(info.games) || [];
+        $scope.games = info.games || [];
+        $scope.store = info.store || [];
         updateLaunchers();
     });
 
     function updateLaunchers() {
         var newLaunchers = [];
 
-        [].forEach.call($scope.games, function(game) {
+        [].forEach.call($scope.store.games, function(game) {
             if (game.id == 'explore') return; // explore is a special case, don't include it
 
             newLaunchers.push({
