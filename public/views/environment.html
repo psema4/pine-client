@@ -1,6 +1,13 @@
 <div class="view-container">
     <h3><u>Pine</u></h3>
     <div class="dashboard">
+        <div ng-show="isPineSystem">
+            <h5>System</h5>
+            <button ng-click="halt()">Halt</button> &nbsp;
+            <button ng-click="reboot()">Reboot</button> &nbsp;
+            <button ng-click="updateClient()">Update Client</button>
+        </div>
+
         <h5>News</h5>
         <textarea ng-model="news"></textarea><br/>
 
@@ -23,12 +30,14 @@
                 <button ng-click="testSound()">Test Sound</button>
             </div>
 
+<!--
             <div ng-show="isPineSystem" style="display: inline-block; position: absolute; top: 0px; left: 500px; width: 200px; overflow: hidden;">
                 <h5>System</h5>
                 <button ng-click="halt()">Halt</button> &nbsp;
                 <button ng-click="reboot()">Reboot</button> &nbsp;
                 <button ng-click="updateClient()">Update Client</button>
             </div>
+-->
         </div>
     </div>
 </div>
