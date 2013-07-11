@@ -1,3 +1,5 @@
+.testing { display: none; } /* refactor - see view/environment.html */
+
 body,
 .view-container {
     margin: 0px;

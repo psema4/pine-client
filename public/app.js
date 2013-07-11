@@ -45,6 +45,10 @@ testApp.config(function($routeProvider) {
     $rootScope.$on("$routeChangeSuccess", function(evt, current, previous) {
         if ((! '$$route' in current) || (current.$$route == undefined)) return;
 
+        if (previous && previous.scope) {
+            clearInterval(previous.scope.gamepadInterval);
+        }
+
         if (current.$$route.controller == 'gameController') {
             $window.Game = { loading: true };
 

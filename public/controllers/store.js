@@ -32,7 +32,7 @@ function storeController($scope, $location, gamepad) {
     }
 
    /* Gamepad Handling */
-    setInterval(function() {
+    $scope.gamepadInterval = setInterval(function() {
         $scope.$apply(function() {
             var gpStates = gamepad.poll();
             var gp0 = gpStates[0];
