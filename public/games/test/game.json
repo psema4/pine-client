@@ -8,7 +8,8 @@
     	"click_happy": {
     		"title": "Click-happy",
     		"description": "You clicked the rectangle!",
-    		"icon": ""
+    		"icon": "",
+            "goal": 5
     	}
     }
 }

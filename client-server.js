@@ -174,23 +174,23 @@ server.get('/sound', function(req, res) {
 });
 
 //FIXME: Fetch data from serverside rather than using a temporary object
-var achievement_data = {}
+var achievement_data = {};
 function getAchievementProgress (game, slug, cb) {
     if (!achievement_data[game]) achievement_data[game] = {};
-    cb(achievement_data[game][slug] || 0)
+    cb(achievement_data[game][slug] || 0);
 }
 
 function setAchievementProgress (game, slug, value, cb) {
     if (!achievement_data[game]) achievement_data[game] = {};
-    achievement_data[game][slug] = value
-    cb(null)
+    achievement_data[game][slug] = value;
+    cb(null);
 }
 
 server.get('/achievements/progress', function (req, res) {
     getAchievementProgress(req.query.game, req.query.slug, function (progress) {
-        res.send(progress)
-    })
-})
+        res.send(progress);
+    });
+});
 
 server.get('/achievements/unlocked', function (req, res) {
     fs.readFile('public/games/' + req.query.game + '/game.json', 'utf8', function (err, game) {
@@ -202,18 +202,67 @@ server.get('/achievements/unlocked', function (req, res) {
              || achievement.goal === progress
             );
         });
-    })
-})
+    });
+});
 
 server.get('/achievements/unlock', function (req, res) {
     fs.readFile('public/games/' + req.query.game + '/game.json', 'utf8', function (err, game) {
         var achievement = JSON.parse(game).achievements[req.query.slug];
-        
-        setAchievementProgress(req.query.game, req.query.slug, achievement.goal || 1, function (err) {
-            res.send(err)
+        getAchievementProgress(req.query.game, req.query.slug, function (amount) {
+            if (amount === (achievement.goal || 1)) {
+                res.send(false)
+            }
+            else
+            {
+                setAchievementProgress(req.query.game, req.query.slug, achievement.goal || 1, function (err) {
+                    res.send(true);
+                });
+            }
         });
-    })
-})
+    });
+});
+
+server.get('/achievements/incr', function (req, res) {
+    fs.readFile('public/games/' + req.query.game + '/game.json', 'utf8', function (err, game) {
+        var achievement = JSON.parse(game).achievements[req.query.slug], goal = achievement.goal || 1;
+        
+        getAchievementProgress(req.query.game, req.query.slug, function (amount) {
+            if (amount === goal) {
+                res.send(false);
+            }
+            else
+            {
+                amount += parseInt(req.query.amount);
+                if (amount > goal) amount = goal;
+                setAchievementProgress(req.query.game, req.query.slug, amount, function (err) {
+                    res.send(amount === goal);
+                });
+            }
+        });
+    });
+});
+
+server.get('/achievements/set', function (req, res) {
+    fs.readFile('public/games/' + req.query.game + '/game.json', 'utf8', function (err, game) {
+        var achievement = JSON.parse(game).achievements[req.query.slug], goal = achievement.goal || 1, amount = parseInt(req.query.amount);
+        
+        if (amount > goal) amount = goal;
+
+        getAchievementProgress(req.query.game, req.query.slug, function (progress) {
+            if (progress === goal) {
+                setAchievementProgress(req.query.game, req.query.slug, amount, function () {
+                    res.send(false);
+                });
+            }
+            else
+            {
+                setAchievementProgress(req.query.game, req.query.slug, amount, function () {
+                    res.send(amount === goal)
+                });
+            }
+        });
+    });
+});
 
 server.use('/public', express.static(__dirname + '/public'));
 
