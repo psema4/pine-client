@@ -6,6 +6,7 @@
 .config/
 .dbus/
 .gitconfig
+.local/
 .npm/
 .pki/
 .vim/
