@@ -49,37 +49,44 @@ server.get('/system/info', function(req, res) {
 server.get('/download', function(req, res) {
     var id = req.query.id;
 
-    http.get("http://pinegames.org/download/" + id, function(r) {
-        console.log("Download '" + id + "': got response: " + r.statusCode);
+    var target = {
+        hostname: 'pinegames.org',
+        path: '/download/' + id,
+        port: 80,
+        method: 'OPTIONS'
+    };
 
+    http.get(target, function(r) {
         var basepath = __dirname + '/public/games';
         var filename = basepath + '/' + id + '.zip';
         var writeStream = fs.createWriteStream(filename);
 
+        res.statusCode = r.statusCode;
+
         if (r.statusCode == 200) {
-            res.send('ok');
+            r.on('data', function(d) {
+                writeStream.write(d);
+            });
+
+            r.on('end', function() {
+                writeStream.end();
+
+                exec('/usr/bin/unzip ' + filename
+                  , { cwd: basepath, env: process.env }
+                  , function(error, stdout, stderr) {
+                        puts(error, stdout, stderr);
+                        res.statusCode = 200;
+                        res.end('ok');
+                    }
+                );
+            });
+
         } else if (r.statusCode = 404) {
             res.send('not found');
+
         } else {
             res.send('unexpected response code: ' + r.statusCode);
         }
-
-        r.on('data', function(d) {
-            writeStream.write(d);
-        });
-
-        r.on('end', function() {
-            writeStream.end();
-
-            exec('/usr/bin/unzip ' + filename
-              , { cwd: basepath, env: process.env }
-              , function(error, stdout, stderr) {
-                    puts(error, stdout, stderr);
-                    res.statusCode = 200;
-                    res.end('ok');
-                }
-            );
-        });
 
     }).on('error', function(e) {
         console.log("Got error: " + e.message);
