@@ -52,7 +52,7 @@ $scope.bumController = false;
             newLaunchers.push({
                 id: game.id,
                 title: game.title,
-                icon: game.icon
+                icon: 'games/' + game.id + '/' + game.icon
             });
         });
 
@@ -61,7 +61,7 @@ $scope.bumController = false;
         });
 
         // append system-proxy launchers
-        if ($scope.isPineSystem) {
+        if ($scope.isPineSystem > 0) {
             $scope.launchers.push({ id: 'halt', title: 'Halt', icon: 'assets/halt.png' });
             $scope.launchers.push({ id: 'reboot', title: 'Reboot', icon: 'assets/reboot.png' });
             $scope.launchers.push({ id: 'update', title: 'Update', icon: 'assets/update.png' });
