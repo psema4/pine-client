@@ -1,6 +1,6 @@
 var testApp = angular.module('testapp');
 
-function gameInfoController($scope, $location, gameinfo, gamepad, installer) {
+function gameInfoController($scope, $location, gameinfo, gamepad, installer, toast, sound) {
     $scope.id = /\/(\w+)$/.exec($location.$$path)[1];
     $scope.title = '';
     $scope.description = '';
@@ -72,7 +72,10 @@ function gameInfoController($scope, $location, gameinfo, gamepad, installer) {
     }
 
     $scope.install = function() {
-        installer.pkg($scope.id);
+        installer.pkg($scope.id, function(data) {
+            toast({ delay: 6000, msg: 'Installation result: ' + data });
+            sound.play('assets/bootsound.wav');
+        });
     }
 
    /* Gamepad Handling */
@@ -130,5 +133,5 @@ function gameInfoController($scope, $location, gameinfo, gamepad, installer) {
 }
 
 testApp.controller('gameInfoController', gameInfoController);
-gameInfoController.$inject = ['$scope', '$location', 'GameInfo', 'Gamepad', 'Install'];
+gameInfoController.$inject = ['$scope', '$location', 'GameInfo', 'Gamepad', 'Install', 'Toast', 'Sound'];
 

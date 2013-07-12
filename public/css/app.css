@@ -4,9 +4,27 @@
     position: absolute;
     top: 0px;
     left: 0px;
-    z-index: 10000;
+    z-index: 999;
     color: #000;
     opacity: 0.8;
+}
+
+#toast {
+    display: none;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    min-width: 200px;
+    max-width: 500px;
+    min-height: 60px;
+    max-height: 160px;
+    z-index: 1998;
+    padding: 4px;
+    color: #fff;
+    background-color: #000;
+    opacity: 0.8;
+    border: 1px solid #fff;
+    border-radius: 4px;
 }
 
 body,

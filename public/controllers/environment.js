@@ -1,6 +1,6 @@
 var testApp = angular.module('testapp', []);
 
-function envController($scope, $location, splash, gamepad, sound, shutdown, update, sysinfo, news) {
+function envController($scope, $location, splash, gamepad, sound, shutdown, update, sysinfo, news, toast) {
     $scope.games = [];
     $scope.launchers = [];
     $scope.focus = 0;
@@ -12,6 +12,11 @@ function envController($scope, $location, splash, gamepad, sound, shutdown, upda
 
 //FIXME: Generalize, give user ability to configure gamepad mappings
 $scope.bumController = false;
+
+    // wait for splash
+    setTimeout(function() {
+        toast({ delay: 10000, msg: "Welcome to Pine!. Gamepad users should note:<ul><li>Left and right to select a launcher</li><li>Button 1 to activate a launcher</li><li>Button 2 to go back</li><li>In-game: Button 10 (Start button) for the main menu</li></ul>" });
+    }, 8000);
 
     /* Watches */
     $scope.$watch('launchTarget', function(newValue, oldValue) {
@@ -177,4 +182,4 @@ if ($scope.bumController) {
 }
 
 testApp.controller('envController', envController);
-envController.$inject = ['$scope', '$location', 'Splash', 'Gamepad', 'Sound', 'Shutdown', 'Update', 'Sysinfo', 'News'];
+envController.$inject = ['$scope', '$location', 'Splash', 'Gamepad', 'Sound', 'Shutdown', 'Update', 'Sysinfo', 'News', 'Toast'];
