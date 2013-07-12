@@ -145,8 +145,13 @@ if ($scope.bumController) {
     $scope.explore      = function() { $location.path('/Explore'); }
     $scope.halt         = function() { shutdown.halt(); }
     $scope.reboot       = function() { shutdown.halt(true); }
-    $scope.updateClient = function() { update.client(); }
     $scope.dumper       = function() { console.log($scope.gamepad()); }
+
+    $scope.updateClient = function() {
+        update.client(function(data) {
+            toast({ msg: 'Update result: ' + data });
+        });
+    }
 
     $scope.testSound = function() {
         var path = 'assets/bootsound.wav';
