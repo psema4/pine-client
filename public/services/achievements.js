@@ -2,8 +2,26 @@ var services = angular.module('testapp.services');
 
 services.factory('Achievements', ['$http', '$routeParams', function($http, $routeParams) {
     return {
-        incr: function (slug, amount, options) {
+        incr: function (slug, amount, options, cb) {
+            if (typeof amount === 'object' || amount == null) {
+                options = amount
+                amount = 1
+            }
+            
+            if (typeof options === 'function') {
+                cb = options;
+                options = null;
+            }
 
+            $http({ method: 'GET', params: {game: $routeParams.id, slug: slug, amount: amount}, url: '/achievements/incr' }).
+                success(function(data, status, headers, config) {
+                    if (data === 'true' && !(options && options.silent === true)) console.log("Unlocked achievement '" + slug + "'");
+                    if (cb && typeof cb == 'function') cb(status);
+                }).
+                error(function(data, status, headers, config) {
+                    if (cb && typeof cb == 'function') cb(status);
+                })
+            ;
         },
 
         set: function (slug, amount, options) {
@@ -29,16 +47,15 @@ services.factory('Achievements', ['$http', '$routeParams', function($http, $rout
                 options = null;
             }
 
-            if (!(options && options.silent === true)) console.log("Unlocked achievement '" + slug + "'");
-
             $http({ method: 'GET', params: {game: $routeParams.id, slug: slug}, url: '/achievements/unlock' }).
                 success(function(data, status, headers, config) {
+                    if (data === 'true' && !(options && options.silent === true)) console.log("Unlocked achievement '" + slug + "'");
                     if (cb && typeof cb == 'function') {
                         cb(data);
                     }
                 }).
                 error(function(data, status, headers, config) {
-                    cb(status);
+                    if (cb && typeof cb == 'function') cb(status);
                 })
             ;
         },
@@ -51,7 +68,7 @@ services.factory('Achievements', ['$http', '$routeParams', function($http, $rout
                     }
                 }).
                 error(function(data, status, headers, config) {
-                    cb(status);
+                    if (cb && typeof cb == 'function') cb(status);
                 })
             ;
         }
