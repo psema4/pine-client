@@ -197,6 +197,22 @@ function setAchievementProgress (game, slug, value, cb) {
     cb(null);
 }
 
+// Keep game.json in memory for the current game
+var current_game, current_game_json;
+function getGameData (game, cb) {
+    if (game === current_game) {
+        cb(current_game_json);
+    }
+    else
+    {
+        current_game = game;
+        fs.readFile('public/games/' + game + '/game.json', 'utf8', function (err, data) {
+            cb(current_game_json = data);
+        });
+    }
+}
+
+
 server.get('/achievements/progress', function (req, res) {
     getAchievementProgress(req.query.game, req.query.slug, function (progress) {
         res.send(progress);
@@ -204,7 +220,7 @@ server.get('/achievements/progress', function (req, res) {
 });
 
 server.get('/achievements/unlocked', function (req, res) {
-    fs.readFile('public/games/' + req.query.game + '/game.json', 'utf8', function (err, game) {
+    getGameData(req.query.game, function (game) {
         var achievement = JSON.parse(game).achievements[req.query.slug];
         
         getAchievementProgress(req.query.game, req.query.slug, function (progress) {
@@ -217,7 +233,7 @@ server.get('/achievements/unlocked', function (req, res) {
 });
 
 server.get('/achievements/unlock', function (req, res) {
-    fs.readFile('public/games/' + req.query.game + '/game.json', 'utf8', function (err, game) {
+    getGameData(req.query.game, function (game) {
         var achievement = JSON.parse(game).achievements[req.query.slug];
         getAchievementProgress(req.query.game, req.query.slug, function (amount) {
             if (amount === (achievement.goal || 1)) {
@@ -234,7 +250,7 @@ server.get('/achievements/unlock', function (req, res) {
 });
 
 server.get('/achievements/incr', function (req, res) {
-    fs.readFile('public/games/' + req.query.game + '/game.json', 'utf8', function (err, game) {
+    getGameData(req.query.game, function (game) {
         var achievement = JSON.parse(game).achievements[req.query.slug], goal = achievement.goal || 1;
         
         getAchievementProgress(req.query.game, req.query.slug, function (amount) {
@@ -254,7 +270,7 @@ server.get('/achievements/incr', function (req, res) {
 });
 
 server.get('/achievements/set', function (req, res) {
-    fs.readFile('public/games/' + req.query.game + '/game.json', 'utf8', function (err, game) {
+    getGameData(req.query.game, function (game) {
         var achievement = JSON.parse(game).achievements[req.query.slug], goal = achievement.goal || 1, amount = parseInt(req.query.amount);
         
         if (amount > goal) amount = goal;
