@@ -60,6 +60,13 @@ $scope.bumController = false;
             return a.title < b.title ? -1 : a.title > b.title ? 1 : 0;
         });
 
+        // append system-proxy launchers
+        if ($scope.isPineSystem) {
+            $scope.launchers.push({ id: 'halt', title: 'Halt', icon: 'assets/halt.png' });
+            $scope.launchers.push({ id: 'reboot', title: 'Reboot', icon: 'assets/reboot.png' });
+            $scope.launchers.push({ id: 'update', title: 'Update', icon: 'assets/update.png' });
+        }
+
         setTimeout(function() {
             var launcherEl0 = document.querySelectorAll('.launcher')[0];
             if (launcherEl0) {
@@ -146,8 +153,18 @@ if ($scope.bumController) {
         var id = this.l.id; // extract game id from the launcher directive
 
         if (id) {
+            //FIXME: convert to switch
             if (id == 'explore') {              // have to catch non-games as special cases
                 $scope.explore();
+
+            } else if (id == 'halt') {
+                $scope.halt();
+
+            } else if (id == 'reboot') {
+                $scope.reboot();
+
+            } else if (id == 'update') {
+                $scope.updateClient();
 
             } else {
                 $location.path('/game/'+id);    // otherwise send our ng-view to the gameController
