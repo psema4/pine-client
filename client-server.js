@@ -55,13 +55,16 @@ server.get('/download', function(req, res) {
         port: 80,
         method: 'OPTIONS'
     };
+console.log('/download target:');
+console.log(target);
 
-    http.get(target, function(r) {
+    var handler = function(r) {
         var basepath = __dirname + '/public/games';
         var filename = basepath + '/' + id + '.zip';
         var writeStream = fs.createWriteStream(filename);
 
         res.statusCode = r.statusCode;
+console.log('/download handler: status: ' + r.statusCode);
 
         if (r.statusCode == 200) {
             r.on('data', function(d) {
@@ -82,15 +85,23 @@ server.get('/download', function(req, res) {
             });
 
         } else if (r.statusCode = 404) {
-            res.send('not found');
+            if (target.method == 'OPTIONS') {
+                target.method = 'GET';
+
+                http.get(target, handler).on('error', function(e) {
+                    console.log('Got error: ' + e.message);
+                    console.log('giving up');
+                    res.send('err:' + e.message);
+                });
+            }
 
         } else {
             res.send('unexpected response code: ' + r.statusCode);
         }
+    }
 
-    }).on('error', function(e) {
+    http.get(target, handler).on('error', function(e) {
         console.log("Got error: " + e.message);
-
         res.send('err:' + e.message);
     });
 });
