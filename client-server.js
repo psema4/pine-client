@@ -212,6 +212,11 @@ function getGameData (game, cb) {
     }
 }
 
+server.get('/achievements/about', function (req, res) {
+    getGameData(req.query.game, function (game) {
+        res.send(game.achievements[req.query.slug]);
+    });
+});
 
 server.get('/achievements/progress', function (req, res) {
     getAchievementProgress(req.query.game, req.query.slug, function (progress) {
