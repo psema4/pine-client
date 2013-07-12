@@ -1,4 +1,4 @@
-var services = angular.module('testapp.services', []);
+var services = angular.module('testapp.services');
 
 services.factory('Splash', function() {
     return function() {

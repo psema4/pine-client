@@ -7,6 +7,7 @@
     </head>
 
     <body ng-app="testapp" ng-controller="startupController">
+        <div id="spinner"><img src="assets/spinner.gif" /></div>
         <div id="splash"></div>
         <div id="view" ng-view></div>
 
@@ -14,6 +15,7 @@
 
         <script src="directives/launcher.js"></script>
 
+        <script src="services/spinner.js"></script>
         <script src="services/splash.js"></script>
         <script src="services/gamepad.js"></script>
         <script src="services/sound.js"></script>
