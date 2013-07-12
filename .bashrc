@@ -1,2 +1,1 @@
-#nodejs dev-server.js # dev
-nodejs client-server.js & startx #run
+PINESYSTEM=1 nodejs client-server.js & startx
