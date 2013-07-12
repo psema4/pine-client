@@ -207,7 +207,7 @@ function getGameData (game, cb) {
     {
         current_game = game;
         fs.readFile('public/games/' + game + '/game.json', 'utf8', function (err, data) {
-            cb(current_game_json = data);
+            cb(current_game_json = JSON.parse(data));
         });
     }
 }
@@ -221,7 +221,7 @@ server.get('/achievements/progress', function (req, res) {
 
 server.get('/achievements/unlocked', function (req, res) {
     getGameData(req.query.game, function (game) {
-        var achievement = JSON.parse(game).achievements[req.query.slug];
+        var achievement = game.achievements[req.query.slug];
         
         getAchievementProgress(req.query.game, req.query.slug, function (progress) {
             res.send(
@@ -234,7 +234,7 @@ server.get('/achievements/unlocked', function (req, res) {
 
 server.get('/achievements/unlock', function (req, res) {
     getGameData(req.query.game, function (game) {
-        var achievement = JSON.parse(game).achievements[req.query.slug];
+        var achievement = game.achievements[req.query.slug];
         getAchievementProgress(req.query.game, req.query.slug, function (amount) {
             if (amount === (achievement.goal || 1)) {
                 res.send(false)
@@ -251,7 +251,7 @@ server.get('/achievements/unlock', function (req, res) {
 
 server.get('/achievements/incr', function (req, res) {
     getGameData(req.query.game, function (game) {
-        var achievement = JSON.parse(game).achievements[req.query.slug], goal = achievement.goal || 1;
+        var achievement = game.achievements[req.query.slug], goal = achievement.goal || 1;
         
         getAchievementProgress(req.query.game, req.query.slug, function (amount) {
             if (amount === goal) {
@@ -271,7 +271,7 @@ server.get('/achievements/incr', function (req, res) {
 
 server.get('/achievements/set', function (req, res) {
     getGameData(req.query.game, function (game) {
-        var achievement = JSON.parse(game).achievements[req.query.slug], goal = achievement.goal || 1, amount = parseInt(req.query.amount);
+        var achievement = game.achievements[req.query.slug], goal = achievement.goal || 1, amount = parseInt(req.query.amount);
         
         if (amount > goal) amount = goal;
 
