@@ -1,21 +1,26 @@
 var testApp = angular.module('testapp');
 
-function gameInfoController($scope, $location, gameinfo, gamepad) {
+function gameInfoController($scope, $location, gameinfo, gamepad, installer) {
+    $scope.id = /\/(\w+)$/.exec($location.$$path)[1];
     $scope.title = '';
     $scope.description = '';
     $scope.gamepad = gamepad;
+    //$scope.install = install;
 
-    var id = /\/(\w+)$/.exec($location.$$path)[1];
-
-console.log('looking up game id:', id);
-
-    $scope.gameInfo = gameinfo.get(id, function(manifest) {
+    gameinfo.get($scope.id, function(manifest) {
         $scope.title = manifest.title;
         $scope.description = manifest.description;
+        if ($scope.id != manifest.id) {
+            throw new Error("path id does not match manifest id");
+        }
     });
 
     $scope.quit = function() {
         $location.path('/Explore');
+    }
+
+    $scope.install = function() {
+        installer.pkg($scope.id);
     }
 
    /* Gamepad Handling */
@@ -35,5 +40,5 @@ console.log('looking up game id:', id);
 }
 
 testApp.controller('gameInfoController', gameInfoController);
-gameInfoController.$inject = ['$scope', '$location', 'GameInfo', 'Gamepad'];
+gameInfoController.$inject = ['$scope', '$location', 'GameInfo', 'Gamepad', 'Install'];
 

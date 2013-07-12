@@ -4,7 +4,7 @@ var server = express();
 var exec = require('child_process').exec;
 var spawn = require('child_process').spawn;
 var util = require('util');
-//var http = require('http');
+var http = require('http');
 
 // configurables
 //   IMPORTANT: On a Raspberry Pi (pine-distro) or propery configured Ubuntu/Debian machine, be sure to set
@@ -31,6 +31,8 @@ server.get('/system/info', function(req, res) {
         var games = [];
 
         [].forEach.call(folders, function(folder) {
+            if (folder.match(/\.zip$/)) return;
+
             var filename = 'public/games/' + folder + '/game.json';
             games.push(JSON.parse(fs.readFileSync(filename, 'utf8')));
         });
@@ -41,6 +43,48 @@ server.get('/system/info', function(req, res) {
         }
 
         res.send(JSON.stringify(info));
+    });
+});
+
+server.get('/download', function(req, res) {
+    var id = req.query.id;
+
+    http.get("http://pinegames.org/download/" + id, function(r) {
+        console.log("Download '" + id + "': got response: " + r.statusCode);
+
+        var basepath = __dirname + '/public/games';
+        var filename = basepath + '/' + id + '.zip';
+        var writeStream = fs.createWriteStream(filename);
+
+        if (r.statusCode == 200) {
+            res.send('ok');
+        } else if (r.statusCode = 404) {
+            res.send('not found');
+        } else {
+            res.send('unexpected response code: ' + r.statusCode);
+        }
+
+        r.on('data', function(d) {
+            writeStream.write(d);
+        });
+
+        r.on('end', function() {
+            writeStream.end();
+
+            exec('/usr/bin/unzip ' + filename
+              , { cwd: basepath, env: process.env }
+              , function(error, stdout, stderr) {
+                    puts(error, stdout, stderr);
+                    res.statusCode = 200;
+                    res.end('ok');
+                }
+            );
+        });
+
+    }).on('error', function(e) {
+        console.log("Got error: " + e.message);
+
+        res.send('err:' + e.message);
     });
 });
 
