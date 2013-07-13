@@ -1,4 +1,4 @@
-var testApp = angular.module('testapp', ['testapp.directives', 'testapp.services']);
+var testApp = angular.module('testapp', ['ngCookies', 'testapp.directives', 'testapp.services']);
 
 testApp.config(function($routeProvider) {
     $routeProvider
@@ -17,6 +17,10 @@ testApp.config(function($routeProvider) {
     .when('/Explore', {
         controller: 'storeController',
         templateUrl: 'views/store.html'
+    })
+    .when('/gamepad/test', {
+        contoller: 'gamepadTestController',
+        templateUrl: 'views/gamepad.html'
     })
     .otherwise({redirectTo: '/'});
 

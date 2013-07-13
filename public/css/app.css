@@ -1,5 +1,26 @@
 .testing { display: none; } /* refactor - see view/environment.html */
 
+div.gamepad-test {
+    display: inline-block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 2;
+    color: #000;
+    background-color: transparent;
+}
+iframe.gamepad-test {
+    display: inline-block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    border: 0px solid #000;
+    background-color: #fff;
+    z-index: 1;
+}
+
 #spinner {
     position: absolute;
     top: 0px;
