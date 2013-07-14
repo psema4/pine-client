@@ -4,7 +4,7 @@ services.factory('Achievements', ['$http', '$routeParams', 'Toast', function($ht
     function notify (slug) {
         $http({ method: 'GET', params: {game: $routeParams.id, slug: slug}, url: '/achievements/about' }).
             success(function(data, status, headers, config) {
-                toast({ msg: '<b>Unlocked: ' + data.title + '</b><br>' + data.description });
+                toast({ msg: '<h3>Unlocked: ' + data.title + '</h3>' + data.description });
             }).
             error(function(data, status, headers, config) {
                 if (cb && typeof cb == 'function') cb(status);
