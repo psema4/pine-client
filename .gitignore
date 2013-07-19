@@ -1,5 +1,6 @@
 *~
 *.swp
+*.zip
 .Xauthority
 .bash_history
 .cache/
