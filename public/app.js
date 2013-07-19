@@ -1,4 +1,4 @@
-var testApp = angular.module('testapp', ['ngCookies', 'testapp.directives', 'testapp.services']);
+var testApp = angular.module('testapp', ['ngStorage', 'testapp.directives', 'testapp.services']);
 
 testApp.config(function($routeProvider) {
     $routeProvider

@@ -1,24 +1,48 @@
-var testApp = angular.module('testapp', []);
+var testApp = angular.module('testapp', ['ngStorage']);
 
-function envController($scope, $location, splash, gamepad, sound, shutdown, update, sysinfo, news, toast) {
+function envController($scope, $location, splash, gamepad, sound, shutdown, update, sysinfo, news, toast, $sessionStorage) {
+    // setup localStorage/sessionStorage
+    $scope.id = 'env';
+    if (! $sessionStorage[$scope.id]) {
+        $sessionStorage[$scope.id] = {
+            hasRun: false,
+            focus: 0
+        };
+    }
+
     $scope.games = [];
     $scope.launchers = [];
-    $scope.focus = 0;
+    $scope.focus = ($sessionStorage && $sessionStorage[$scope.id] && $sessionStorage[$scope.id].focus) || 0;
     $scope.splash = splash;
     $scope.isPineSystem = false;
     $scope.gamepad = gamepad;
     $scope.gamepadDump = gamepad.poll();
     $scope.launchTarget = false;
+    $scope.$storage = $sessionStorage;
 
 //FIXME: Generalize, give user ability to configure gamepad mappings
 $scope.bumController = false;
 
-    // wait for splash
-    setTimeout(function() {
-        toast({ delay: 10000, msg: "Welcome to Pine!. Gamepad users should note:<ul><li>Left and right to select a launcher</li><li>Button 1 to activate a launcher</li><li>Button 2 to go back</li><li>In-game: Button 10 (Start button) for the main menu</li></ul>" });
-    }, 8000);
+    // wait for splash (only show on first view, per session)
+    var hasRun = $sessionStorage[$scope.id].hasRun || false;
+    if (! hasRun) {
+        $sessionStorage[$scope.id].hasRun = true;
+        setTimeout(function() {
+            toast({ delay: 10000, msg: "Welcome to Pine!. Gamepad users should note:<ul><li>Left and right to select a launcher</li><li>Button 1 to activate a launcher</li><li>Button 2 to go back</li><li>In-game: Button 10 (Start button) for the main menu</li></ul>" });
+        }, 8000);
+    }
 
     /* Watches */
+    $scope.$watch('focus', function() {
+        $sessionStorage[$scope.id].focus = $scope.focus;
+    });
+
+    $scope.$watch(function() {
+        return angular.toJson($sessionStorage);
+    }, function() {
+        $scope.focus = $sessionStorage[$scope.id].focus;
+    });
+
     $scope.$watch('launchTarget', function(newValue, oldValue) {
         if ($scope.launchTarget && $scope.launchTarget.click && typeof $scope.launchTarget.click == 'function') {
             setTimeout(function() {
@@ -73,9 +97,9 @@ $scope.bumController = false;
         }
 
         setTimeout(function() {
-            var launcherEl0 = document.querySelectorAll('.launcher')[0];
-            if (launcherEl0) {
-                launcherEl0.classList.add('focus');
+            var launcherSelected = document.querySelectorAll('.launcher')[$scope.focus];
+            if (launcherSelected) {
+                launcherSelected.classList.add('focus');
             }
         }, 100);
     }
@@ -187,4 +211,4 @@ if ($scope.bumController) {
 }
 
 testApp.controller('envController', envController);
-envController.$inject = ['$scope', '$location', 'Splash', 'Gamepad', 'Sound', 'Shutdown', 'Update', 'Sysinfo', 'News', 'Toast'];
+envController.$inject = ['$scope', '$location', 'Splash', 'Gamepad', 'Sound', 'Shutdown', 'Update', 'Sysinfo', 'News', 'Toast', '$sessionStorage'];

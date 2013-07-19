@@ -1,14 +1,31 @@
 var testApp = angular.module('testapp');
 
-function storeController($scope, $location, gamepad, storeinfo) {
+function storeController($scope, $location, gamepad, storeinfo, $sessionStorage) {
+    // setup localStorage/sessionStorage
+    $scope.id = 'store';
+    if (! $sessionStorage[$scope.id]) {
+        $sessionStorage[$scope.id] = {
+            focus: 0
+        }
+    }
     $scope.gamepad = gamepad;
 
 $scope.bumController = false;
 
-    $scope.focus = 0;
+    $scope.focus = ($sessionStorage && $sessionStorage[$scope.id] && $sessionStorage[$scope.id].focus) || 0;
     $scope.launchTarget = false;
 
     /* Watches */
+    $scope.$watch('focus', function() {
+        $sessionStorage[$scope.id].focus = $scope.focus;
+    });
+
+    $scope.$watch(function() {
+        return angular.toJson($sessionStorage);
+    }, function() {
+        $scope.focus = $sessionStorage[$scope.id].focus;
+    });
+
     $scope.$watch('launchTarget', function(newValue, oldValue) {
         if ($scope.launchTarget && $scope.launchTarget.click && typeof $scope.launchTarget.click == 'function') {
             setTimeout(function() {
@@ -56,9 +73,9 @@ $scope.bumController = false;
         });
 
         setTimeout(function() {
-            var launcherEl0 = document.querySelectorAll('.launcher')[0];
-            if (launcherEl0) {
-                launcherEl0.classList.add('focus');
+            var launcherSelected = document.querySelectorAll('.launcher')[$scope.focus];
+            if (launcherSelected) {
+                launcherSelected.classList.add('focus');
             }
         }, 100);
     }
@@ -135,5 +152,5 @@ if ($scope.bumController) {
 }
 
 testApp.controller('storeController', storeController);
-storeController.$inject = ['$scope', '$location', 'Gamepad', 'Storeinfo'];
+storeController.$inject = ['$scope', '$location', 'Gamepad', 'Storeinfo', '$sessionStorage'];
 
