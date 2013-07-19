@@ -7,10 +7,9 @@
     "achievements": {
     	"click_happy": {
     		"title": "Click-happy",
-    		"description": "You clicked the rectangle!",
+    		"description": "You clicked the rectangle 5 times!",
     		"icon": "",
             "goal": 5
     	}
     }
 }
-

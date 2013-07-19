@@ -48,6 +48,10 @@ iframe.gamepad-test {
     border-radius: 4px;
 }
 
+#toast h3 {
+    margin: 0;
+}
+
 body,
 .view-container {
     margin: 0px;

@@ -28,7 +28,7 @@ $scope.bumController = false;
     if (! hasRun) {
         $sessionStorage[$scope.id].hasRun = true;
         setTimeout(function() {
-            toast({ delay: 10000, msg: "Welcome to Pine!. Gamepad users should note:<ul><li>Left and right to select a launcher</li><li>Button 1 to activate a launcher</li><li>Button 2 to go back</li><li>In-game: Button 10 (Start button) for the main menu</li></ul>" });
+            toast({ delay: 10000, msg: "<h3>Welcome to Pine!</h3>Gamepad users should note:<ul><li>Left and right to select a launcher</li><li>Button 1 to activate a launcher</li><li>Button 2 to go back</li><li>In-game: Button 10 (Start button) for the main menu</li></ul>" });
         }, 8000);
     }
 
